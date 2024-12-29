@@ -31,6 +31,18 @@
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="{{ asset('AdminLTE2/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}" />
 
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/main.min.css" rel="stylesheet">
+
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/main.min.js"></script>
+
+    <!-- Optional: jQuery if you're using AdminLTE -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Optional: AdminLTE JS -->
+    <script src="{{ asset('AdminLTE2/dist/js/adminlte.min.js') }}"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -41,6 +53,126 @@
     <!-- Google Font -->
     <link rel="stylesheet"
         href="{{ asset('AdminLTE2/https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic') }}" />
+
+
+    <style>
+        /* Styling untuk kalender secara keseluruhan */
+        .calendar {
+            margin: 60px auto;
+            /* Menjaga kalender tetap di tengah halaman dengan margin */
+            max-width: 520px;
+            /* Lebar maksimum kalender */
+            background-color: #fff;
+            /* Latar belakang putih */
+            border-radius: 5px;
+            /* Sudut membulat */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            /* Bayangan halus */
+        }
+
+        /* Mengatur panel kalender */
+        .calendar .panel {
+            margin: 0;
+            /* Menghapus margin pada panel */
+            border: none;
+            /* Menghilangkan border default panel */
+            padding: 0;
+            /* Menghapus padding pada panel */
+        }
+
+        /* Styling pada header panel */
+        .calendar .panel-heading {
+            padding: 15px 0;
+            /* Padding vertikal pada header */
+            background-color: #f8f8f8;
+            /* Latar belakang header */
+            border-bottom: 1px solid #ddd;
+            /* Garis bawah header */
+        }
+
+        /* Styling untuk header kalender (bulan dan tombol navigasi) */
+        .calendar-header {
+            display: flex;
+            /* Menggunakan flexbox untuk tata letak tombol dan bulan */
+            justify-content: center;
+            /* Menyusun tombol dan bulan di tengah */
+            align-items: center;
+            /* Menyusun tombol dan bulan secara vertikal */
+            gap: 10px;
+            /* Memberikan jarak antar elemen */
+        }
+
+        .calendar .calendar-header button {
+            padding: 5px 15px;
+            /* Padding pada tombol */
+            font-size: 14px;
+            /* Ukuran font tombol */
+        }
+
+        /* Styling untuk teks bulan dan tahun */
+        #calendarMonth {
+            font-size: 18px;
+            /* Ukuran font */
+            font-weight: bold;
+            /* Membuat teks lebih tebal */
+        }
+
+        /* Mengatur layout untuk hari dalam minggu */
+        .panel-body {
+            padding: 10px 0;
+            /* Padding vertikal pada body kalender */
+            margin-top: 10px;
+            /* Memberikan jarak dari header */
+        }
+
+        .row.text-center {
+            margin: 0;
+            /* Menghapus margin di row */
+        }
+
+        /* Mengatur kolom untuk hari dalam minggu */
+        .col-xs-1 {
+            padding: 10px 0;
+            /* Padding vertikal agar tidak terlalu rapat */
+        }
+
+        /* Menambahkan styling pada setiap hari dalam bulan */
+        .calendar .day {
+            height: 80px;
+            /* Menyesuaikan tinggi setiap kolom hari */
+            border: 1px solid #ddd;
+            /* Border halus */
+            display: flex;
+            /* Menggunakan flexbox untuk konten */
+            justify-content: center;
+            /* Menyusun konten di tengah */
+            align-items: center;
+            /* Menyusun konten secara vertikal */
+            padding: 5px 0;
+            /* Padding agar konten tidak terlalu rapat */
+            text-align: center;
+            /* Mengatur teks agar rata tengah */
+        }
+
+        /* Styling untuk hari yang tidak aktif (misalnya di luar bulan) */
+        .calendar .inactive {
+            background-color: #f9f9f9;
+            /* Latar belakang abu-abu muda */
+            color: #ccc;
+            /* Warna teks abu-abu */
+        }
+
+        /* Styling untuk hari ini (hari yang sedang aktif) */
+        .calendar .today {
+            background-color: #337ab7;
+            /* Latar belakang biru */
+            color: white;
+            /* Warna teks putih */
+            font-weight: bold;
+            /* Font lebih tebal */
+        }
+    </style>
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -426,7 +558,7 @@
                         <!-- small box -->
                         <div class="small-box bg-yellow">
                             <div class="inner">
-                                <h3>44</h3>
+                                <h3>{{ $users }}</h3>
 
                                 <p>User Registrations</p>
                             </div>
@@ -458,331 +590,283 @@
                 <!-- /.row -->
                 <!-- Main row -->
                 <div class="row">
-                    <!-- Left col -->
-                    <section class="col-lg-7 connectedSortable">
-
-                    </section>
-                    <!-- /.Left col -->
-                    <!-- right col (We are only adding the ID to make the widgets sortable)-->
                     <section class="col-lg-5 connectedSortable">
+                        <div class="container">
 
 
-
-
-                        <!-- Calendar -->
-                        <div class="box box-solid bg-green-gradient">
-                            <div class="box-header">
-                                <i class="fa fa-calendar"></i>
-
-                                <h3 class="box-title">Calendar</h3>
-                                <!-- tools box -->
-                                <div class="pull-right box-tools">
-                                    <!-- button with a dropdown -->
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-success btn-sm dropdown-toggle"
-                                            data-toggle="dropdown">
-                                            <i class="fa fa-bars"></i>
-                                        </button>
-                                        <ul class="dropdown-menu pull-right" role="menu">
-                                            <li>
-                                                <a href="{{ asset('AdminLTE2/') }}#">Add new event</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ asset('AdminLTE2/') }}#">Clear events</a>
-                                            </li>
-                                            <li class="divider"></li>
-                                            <li>
-                                                <a href="{{ asset('AdminLTE2/') }}#">View calendar</a>
-                                            </li>
-                                        </ul>
+                            <div class="calendar panel panel-default">
+                                <!-- Header Kalender -->
+                                <div class="panel-heading">
+                                    <div class="row calendar-header text-center">
+                                        <div class="col-xs-2">
+                                            <button id="prevMonth" class="btn btn-default">&laquo; Prev</button>
+                                        </div>
+                                        <div class="col-xs-8">
+                                            <h4 id="calendarMonth">Month Year</h4>
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <button id="nextMonth" class="btn btn-default">Next &raquo;</button>
+                                        </div>
                                     </div>
-                                    <button type="button" class="btn btn-success btn-sm" data-widget="collapse">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-success btn-sm" data-widget="remove">
-                                        <i class="fa fa-times"></i>
-                                    </button>
                                 </div>
-                                <!-- /. tools -->
-                            </div>
-                            <!-- /.box-header -->
-                            <div class="box-body no-padding">
-                                <!--The calendar -->
-                                <div id="calendar" style="width: 100%"></div>
-                            </div>
-                            <!-- /.box-body -->
-                            <div class="box-footer text-black">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <!-- Progress bars -->
-                                        <div class="clearfix">
-                                            <span class="pull-left">Task #1</span>
-                                            <small class="pull-right">90%</small>
-                                        </div>
-                                        <div class="progress xs">
-                                            <div class="progress-bar progress-bar-green" style="width: 90%"></div>
-                                        </div>
 
-                                        <div class="clearfix">
-                                            <span class="pull-left">Task #2</span>
-                                            <small class="pull-right">70%</small>
-                                        </div>
-                                        <div class="progress xs">
-                                            <div class="progress-bar progress-bar-green" style="width: 70%"></div>
-                                        </div>
-                                    </div>
-                                    <!-- /.col -->
-                                    <div class="col-sm-6">
-                                        <div class="clearfix">
-                                            <span class="pull-left">Task #3</span>
-                                            <small class="pull-right">60%</small>
-                                        </div>
-                                        <div class="progress xs">
-                                            <div class="progress-bar progress-bar-green" style="width: 60%"></div>
-                                        </div>
+                                <!-- Hari dalam Minggu -->
+                                <div class="panel-body">
+                                    <div class="row text-center">
 
-                                        <div class="clearfix">
-                                            <span class="pull-left">Task #4</span>
-                                            <small class="pull-right">40%</small>
-                                        </div>
-                                        <div class="progress xs">
-                                            <div class="progress-bar progress-bar-green" style="width: 40%"></div>
-                                        </div>
+                                        <div class="col-xs-1"><strong>Sun</strong></div>
+                                        <div class="col-xs-1"><strong>Mon</strong></div>
+                                        <div class="col-xs-1"><strong>Tue</strong></div>
+                                        <div class="col-xs-1"><strong>Wed</strong></div>
+                                        <div class="col-xs-1"><strong>Thu</strong></div>
+                                        <div class="col-xs-1"><strong>Fri</strong></div>
+                                        <div class="col-xs-1"><strong>Sat</strong></div>
                                     </div>
-                                    <!-- /.col -->
+
+                                    <!-- Badan Kalender -->
+                                    <div id="calendarBody" class="row">
+                                        <!-- Hari-hari dalam bulan akan di-generate di sini -->
+                                    </div>
                                 </div>
-                                <!-- /.row -->
                             </div>
+
                         </div>
-                        <!-- /.box -->
                     </section>
-                    <!-- right col -->
+
+
                 </div>
-                <!-- /.row (main row) -->
             </section>
-            <!-- /.content -->
+
+
+            <!-- right col -->
         </div>
-        <!-- /.content-wrapper -->
-        <footer class="main-footer">
-            <div class="pull-right hidden-xs"><b>Version</b> 2.4.13</div>
-            <strong>Copyright &copy; 2014-2019
-                <a href="{{ asset('AdminLTE2/') }}https://adminlte.io">AdminLTE</a>.</strong>
-            All rights reserved.
-        </footer>
 
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark" style="display: none">
-            <!-- Create the tabs -->
-            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-                <li>
-                    <a href="{{ asset('AdminLTE2/') }}#control-sidebar-home-tab" data-toggle="tab"><i
-                            class="fa fa-home"></i></a>
-                </li>
-                <li>
-                    <a href="{{ asset('AdminLTE2/') }}#control-sidebar-settings-tab" data-toggle="tab"><i
-                            class="fa fa-gears"></i></a>
-                </li>
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <!-- Home tab content -->
-                <div class="tab-pane" id="control-sidebar-home-tab">
-                    <h3 class="control-sidebar-heading">Recent Activity</h3>
-                    <ul class="control-sidebar-menu">
-                        <li>
-                            <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
-                                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">
-                                        Langdon's Birthday
-                                    </h4>
+        <!-- /.row (main row) -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs"><b>Version</b> 2.4.13</div>
+        <strong>Copyright &copy; 2014-2019
+            <a href="{{ asset('AdminLTE2/') }}https://adminlte.io">AdminLTE</a>.</strong>
+        All rights reserved.
+    </footer>
 
-                                    <p>Will be 23 on April 24th</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
-                                <i class="menu-icon fa fa-user bg-yellow"></i>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark" style="display: none">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li>
+                <a href="{{ asset('AdminLTE2/') }}#control-sidebar-home-tab" data-toggle="tab"><i
+                        class="fa fa-home"></i></a>
+            </li>
+            <li>
+                <a href="{{ asset('AdminLTE2/') }}#control-sidebar-settings-tab" data-toggle="tab"><i
+                        class="fa fa-gears"></i></a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <!-- Home tab content -->
+            <div class="tab-pane" id="control-sidebar-home-tab">
+                <h3 class="control-sidebar-heading">Recent Activity</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
+                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
 
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">
-                                        Frodo Updated His Profile
-                                    </h4>
-
-                                    <p>New phone +1(800)555-1234</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
-                                <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">
-                                        Nora Joined Mailing List
-                                    </h4>
-
-                                    <p>nora@example.com</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
-                                <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-                                <div class="menu-info">
-                                    <h4 class="control-sidebar-subheading">
-                                        Cron Job 254 Executed
-                                    </h4>
-
-                                    <p>Execution time 5 seconds</p>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.control-sidebar-menu -->
-
-                    <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                    <ul class="control-sidebar-menu">
-                        <li>
-                            <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
+                            <div class="menu-info">
                                 <h4 class="control-sidebar-subheading">
-                                    Custom Template Design
-                                    <span class="label label-danger pull-right">70%</span>
+                                    Langdon's Birthday
                                 </h4>
 
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
+                                <p>Will be 23 on April 24th</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
+                            <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                            <div class="menu-info">
                                 <h4 class="control-sidebar-subheading">
-                                    Update Resume
-                                    <span class="label label-success pull-right">95%</span>
+                                    Frodo Updated His Profile
                                 </h4>
 
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
+                                <p>New phone +1(800)555-1234</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
+                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+                            <div class="menu-info">
                                 <h4 class="control-sidebar-subheading">
-                                    Laravel Integration
-                                    <span class="label label-warning pull-right">50%</span>
+                                    Nora Joined Mailing List
                                 </h4>
 
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
+                                <p>nora@example.com</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
+                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+                            <div class="menu-info">
                                 <h4 class="control-sidebar-subheading">
-                                    Back End Framework
-                                    <span class="label label-primary pull-right">68%</span>
+                                    Cron Job 254 Executed
                                 </h4>
 
-                                <div class="progress progress-xxs">
-                                    <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.control-sidebar-menu -->
-                </div>
-                <!-- /.tab-pane -->
-                <!-- Stats tab content -->
-                <div class="tab-pane" id="control-sidebar-stats-tab">
-                    Stats Tab Content
-                </div>
-                <!-- /.tab-pane -->
-                <!-- Settings tab content -->
-                <div class="tab-pane" id="control-sidebar-settings-tab">
-                    <form method="post">
-                        <h3 class="control-sidebar-heading">
-                            General Settings
-                        </h3>
+                                <p>Execution time 5 seconds</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
 
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Report panel usage
-                                <input type="checkbox" class="pull-right" checked />
-                            </label>
+                <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Custom Template Design
+                                <span class="label label-danger pull-right">70%</span>
+                            </h4>
 
-                            <p>
-                                Some information about this general settings
-                                option
-                            </p>
-                        </div>
-                        <!-- /.form-group -->
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Update Resume
+                                <span class="label label-success pull-right">95%</span>
+                            </h4>
 
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Allow mail redirect
-                                <input type="checkbox" class="pull-right" checked />
-                            </label>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Laravel Integration
+                                <span class="label label-warning pull-right">50%</span>
+                            </h4>
 
-                            <p>Other sets of options are available</p>
-                        </div>
-                        <!-- /.form-group -->
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ asset('AdminLTE2/') }}javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Back End Framework
+                                <span class="label label-primary pull-right">68%</span>
+                            </h4>
 
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Expose author name in posts
-                                <input type="checkbox" class="pull-right" checked />
-                            </label>
-
-                            <p>
-                                Allow the user to show his name in blog
-                                posts
-                            </p>
-                        </div>
-                        <!-- /.form-group -->
-
-                        <h3 class="control-sidebar-heading">
-                            Chat Settings
-                        </h3>
-
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Show me as online
-                                <input type="checkbox" class="pull-right" checked />
-                            </label>
-                        </div>
-                        <!-- /.form-group -->
-
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Turn off notifications
-                                <input type="checkbox" class="pull-right" />
-                            </label>
-                        </div>
-                        <!-- /.form-group -->
-
-                        <div class="form-group">
-                            <label class="control-sidebar-subheading">
-                                Delete chat history
-                                <a href="{{ asset('AdminLTE2/') }}javascript:void(0)" class="text-red pull-right"><i
-                                        class="fa fa-trash-o"></i></a>
-                            </label>
-                        </div>
-                        <!-- /.form-group -->
-                    </form>
-                </div>
-                <!-- /.tab-pane -->
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
             </div>
-        </aside>
-        <!-- /.control-sidebar -->
-        <!-- Add the sidebar's background. This div must be placed
+            <!-- /.tab-pane -->
+            <!-- Stats tab content -->
+            <div class="tab-pane" id="control-sidebar-stats-tab">
+                Stats Tab Content
+            </div>
+            <!-- /.tab-pane -->
+            <!-- Settings tab content -->
+            <div class="tab-pane" id="control-sidebar-settings-tab">
+                <form method="post">
+                    <h3 class="control-sidebar-heading">
+                        General Settings
+                    </h3>
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Report panel usage
+                            <input type="checkbox" class="pull-right" checked />
+                        </label>
+
+                        <p>
+                            Some information about this general settings
+                            option
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Allow mail redirect
+                            <input type="checkbox" class="pull-right" checked />
+                        </label>
+
+                        <p>Other sets of options are available</p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Expose author name in posts
+                            <input type="checkbox" class="pull-right" checked />
+                        </label>
+
+                        <p>
+                            Allow the user to show his name in blog
+                            posts
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <h3 class="control-sidebar-heading">
+                        Chat Settings
+                    </h3>
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Show me as online
+                            <input type="checkbox" class="pull-right" checked />
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Turn off notifications
+                            <input type="checkbox" class="pull-right" />
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Delete chat history
+                            <a href="{{ asset('AdminLTE2/') }}javascript:void(0)" class="text-red pull-right"><i
+                                    class="fa fa-trash-o"></i></a>
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+                </form>
+            </div>
+            <!-- /.tab-pane -->
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
-        <div class="control-sidebar-bg"></div>
+    <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
 
@@ -824,6 +908,94 @@
     <script src="{{ asset('AdminLTE2/dist/js/pages/dashboard.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('AdminLTE2/dist/js/demo.js') }}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        // JavaScript untuk mengatur kalender
+        const today = new Date();
+        let currentMonth = today.getMonth();
+        let currentYear = today.getFullYear();
+
+        function generateCalendar(month, year) {
+            const calendarBody = $("#calendarBody");
+            calendarBody.empty();
+
+            // Hari-hari dalam sebulan
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDay = new Date(year, month, 1).getDay(); // Hari pertama dalam bulan
+
+            // Nama bulan dan tahun
+            $("#calendarMonth").text(
+                `${new Date(year, month).toLocaleString("default", {
+                month: "long",
+            })} ${year}`
+            );
+
+            // Baris pertama untuk menambahkan kotak kosong sebelum hari pertama
+            let dayCounter = 0;
+            let row = $('<div class="row"></div>');
+            for (let i = 0; i < firstDay; i++) {
+                row.append('<div class="col-xs-1 day inactive"></div>');
+                dayCounter++;
+            }
+
+            // Tambahkan hari-hari dalam bulan
+            for (let day = 1; day <= daysInMonth; day++) {
+                const isToday =
+                    day === today.getDate() &&
+                    month === today.getMonth() &&
+                    year === today.getFullYear();
+
+                row.append(
+                    `<div class="col-xs-1 day ${isToday ? "today" : ""}">${day}</div>`
+                );
+                dayCounter++;
+
+                // Jika baris penuh (7 hari), tambahkan ke calendarBody dan buat baris baru
+                if (dayCounter % 7 === 0) {
+                    calendarBody.append(row);
+                    row = $('<div class="row"></div>');
+                }
+            }
+
+            // Tambahkan kotak kosong setelah hari terakhir di baris terakhir
+            while (dayCounter % 7 !== 0) {
+                row.append('<div class="col-xs-1 day inactive"></div>');
+                dayCounter++;
+            }
+
+            // Tambahkan baris terakhir jika belum ditambahkan
+            if (row.children().length > 0) {
+                calendarBody.append(row);
+            }
+        }
+
+        // Event untuk navigasi bulan
+        $("#prevMonth").on("click", function() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            generateCalendar(currentMonth, currentYear);
+        });
+
+        $("#nextMonth").on("click", function() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            generateCalendar(currentMonth, currentYear);
+        });
+
+        // Generate kalender saat halaman dimuat
+        $(document).ready(function() {
+            generateCalendar(currentMonth, currentYear);
+        });
+    </script>
+
 </body>
 
 </html>

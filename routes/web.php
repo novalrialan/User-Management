@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
-
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +26,15 @@ Route::post('/registerstore', [UserController::class, 'registerstore'])->name('r
 
 Route::group(['middleware' => ['auth', 'accesscontrol:superadmin,admin,member']], function () {
     Route::get('/master', function () {
-        return view('master');
+        $users = User::count();
+
+
+
+
+        $data = [
+            "users" => $users
+        ];
+
+        return view('master', $data);
     });
 });
